@@ -122,10 +122,23 @@ client.on('message', message => {
             message.channel.send('Broken');
         }
     }
-    //RANK
-    if (commandIs("rank", message)) {
+    //help
+    if (commandIs("help", message)) {
         message.delete();
-        message.channel.send('Add it in');
+        message.channel.send('```\nCurrent list of Commands:\n!about          - information about the Bot\n!roll [D#] [X]  - Rolls a D# sided die X amount of times\n!wednesday      - Shows the current roster for Wednesday\n!sunday         - Shows the current roster for Sunday\n```');
+        
+        if (hasRole(message.member, "Officers")){
+            message.channel.send('```\nCurrent list of Officer commands:\n!addwed [userID]    - Adds a person to the roster for Wednesday\n!addsun [userID]    - Adds a person to the roster for Sunday\n!postprone          - Cancels the planned meeting for the day\n!meeting            - Announces a meeting for the day\n```')
+        }
+    }
+
+    //about
+    if (commandIs("about", message)) {
+        message.delete();
+        message.channel.send('', new Discord.Attachment('div/toptem.jpg'));
+        setTimeout(function(){
+            message.channel.send('Hello! Im RaidBot! \nMy purpose is to handle and announce events.\nUse ``!help`` to get the list of commands');
+        }, 500);
     }
 
     //postprone meeting
@@ -165,7 +178,7 @@ client.on('message', message => {
         }
     }
     //command for checking people assigned to wednesday
-     if (commandIs("wednesday", message)) {
+    if (commandIs("wednesday", message)) {
         if (Wednesday.str.length>0){
             message.delete();
             message.channel.send('Current roster for Wednesday:' + Wednesday.str);
@@ -190,7 +203,7 @@ client.on('message', message => {
         }
     }
     //command for checking people assigned to sunday
-     if (commandIs("sunday", message)) {
+    if (commandIs("sunday", message)) {
         if (Sunday.str.length>0){
             message.delete();
             message.channel.send('Current roster for Sunday: ' + Sunday.str);

@@ -5,13 +5,14 @@ const client = new Discord.Client();
 
 //Classes
 class Event{
-    constructor(bol, Date1) {
+    constructor(bol1, bol2, Date1) {
     this.time    = Date1;
     this.passed  = false;
     this.roof;
     this.str     = [];
     this.counter = 0;
-    this.isRaid  = bol;
+    this.isRaid  = bol1;
+    this.isActive = bol2
     } 
 }
 
@@ -26,13 +27,13 @@ var raiding     = '321707816199127041';
 //=======================================================================================================================
 
 //Events + Dates
-var Monday    = new Event(false,  new Date(2017, 8, 4,  19).getTime());
-var Tuesday   = new Event(false, new Date(2017, 8, 5,  20).getTime());
-var Wednesday = new Event(true,  new Date(2017, 8, 6,  20).getTime());
-var Thursday  = new Event(false, new Date(2017, 8, 7,  20).getTime());
-var Friday    = new Event(true,  new Date(2017, 8, 8,  20).getTime());
-var Saturday  = new Event(true, new Date(2017, 8, 9,  21).getTime());
-var Sunday    = new Event(true,  new Date(2017, 8, 10, 19).getTime());
+var Monday    = new Event(false, true,  new Date(2017, 8, 4,  19).getTime());
+var Tuesday   = new Event(false, true,  new Date(2017, 8, 5,  20).getTime());
+var Wednesday = new Event(true,  true,  new Date(2017, 8, 6,  20).getTime());
+var Thursday  = new Event(false, true,  new Date(2017, 8, 7,  20).getTime());
+var Friday    = new Event(true,  false, new Date(2017, 8, 8,  20).getTime());
+var Saturday  = new Event(false, false, new Date(2017, 8, 9,  21).getTime());
+var Sunday    = new Event(true,  true,  new Date(2017, 8, 10, 19).getTime());
 
 //=======================================================================================================================
 
@@ -72,7 +73,7 @@ function roofupdate(Event) {
 }
 
 function announce(Event) {    
-    if (current >= Event.time && Event.roof >= current && Event.passed === false){
+    if (current >= Event.time && Event.roof >= current && Event.passed === false && Event.isActive == true){
         if (Event.isRaid === true) {
             client.channels.get(general).send('Raid starting in 1 hour!' + Event.str);
             Event.passed = true;
@@ -100,11 +101,22 @@ function addperson(Event, message){
             Event.counter++;
 }
 
+function turnon(Event, message){
+    Event.isActive = true;
+    message.channel.send('Event is now enabled')
+}
+
+function turnoff(Event, message){
+    Event.isActive = false;
+    message.channel.send('Event is now disabled')
+}
+
 //=======================================================================================================================
 
 //comment for when the bot is ready
 client.on('ready',() => {
     console.log('Status:Online');
+     client.user.setGame('dead');
 });
 
 //=======================================================================================================================
@@ -122,6 +134,7 @@ client.on('message', message => {
             message.channel.send('Broken');
         }
     }
+
     //help
     if (commandIs("help", message)) {
         message.delete();
@@ -165,7 +178,6 @@ client.on('message', message => {
         }
     }
 
-
     //Command for adding people wednesday
     if (commandIs("addwed", message)) {
         if (hasRole(message.member, "Officers")) {
@@ -177,6 +189,7 @@ client.on('message', message => {
             message.channel.send('Only Officers can use this command');
         }
     }
+
     //command for checking people assigned to wednesday
     if (commandIs("wednesday", message)) {
         if (Wednesday.str.length>0){
@@ -189,8 +202,6 @@ client.on('message', message => {
         }
     }
 
-
-
     //Command for adding people sunday
     if (commandIs("addsun", message)) {
         if(hasRole(message.member,"Officers")) {
@@ -202,6 +213,7 @@ client.on('message', message => {
             message.channel.send('Only Officers can use this command');
         }
     }
+
     //command for checking people assigned to sunday
     if (commandIs("sunday", message)) {
         if (Sunday.str.length>0){
@@ -211,6 +223,80 @@ client.on('message', message => {
         else{
             message.delete();
             message.channel.send('No one is signed up for Sunday')
+        }
+    }
+
+    //Enable
+    if (commandIs("enable", message)) {
+        var args = message.content.split(/[ ]+/);
+
+        if (args[1]=="monday"){
+            turnon(Monday, message);
+        }
+
+        else if (args[1]=="tuesday"){
+            turnon(Tuesday, message);
+        }
+
+        else if (args[1]=="wednesday"){
+            turnon(Wednesday, message);
+        }
+
+        else if (args[1]=="thursday"){
+            turnon(Thursday, message);
+        }
+
+        else if (args[1]=="friday"){
+            turnon(Friday, message);
+        }
+
+        else if (args[1]=="saturday"){
+            turnon(Saturday, message);
+        }
+
+        else if (args[1]=="sunday"){
+            turnon(Sunday, message);
+        }
+
+        else{
+            message.channel.send('No defined argument or not a valid argument');
+        }
+    }
+
+    //Disable
+    if (commandIs("disable", message)) {
+        var args = message.content.split(/[ ]+/);
+
+        if (args[1]=="monday"){
+            turnoff(Monday, message);
+        }
+
+        else if (args[1]=="tuesday"){
+            turnoff(Tuesday, message);
+        }
+
+        else if (args[1]=="wednesday"){
+            turnoff(Wednesday, message);
+        }
+
+        else if (args[1]=="thursday"){
+            turnoff(Thursday, message);
+        }
+
+        else if (args[1]=="friday"){
+            turnoff(Friday, message);
+        }
+
+        else if (args[1]=="saturday"){
+            turnoff(Saturday, message);
+        }
+
+        else if (args[1]=="sunday"){
+            turnoff(Sunday, message);
+        }
+
+        else{
+            message.channel.send('No defined argument or not a valid argument');
         }
     }
 

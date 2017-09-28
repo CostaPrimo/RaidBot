@@ -6,12 +6,12 @@ const client = new Discord.Client();
 //Classes
 class Event{
     constructor(bol1, bol2, Date1) {
-    this.time    = Date1;
-    this.passed  = false;
+    this.time     = Date1;
+    this.passed   = false;
     this.roof;
-    this.str     = [];
-    this.counter = 0;
-    this.isRaid  = bol1;
+    this.str      = [];
+    this.counter  = 0;
+    this.isRaid   = bol1;
     this.isActive = bol2
     } 
 }
@@ -62,9 +62,9 @@ function hasRole(mem, role) {
 }
 
 function newtime(Event) {
-        Event.time += 604800000;
-        Event.passed = false;
-        Event.str = [];
+        Event.time 	  += 604800000;
+        Event.passed  = false;
+        Event.str 	  = [];
         Event.counter = 0;
 }
 
@@ -92,14 +92,25 @@ function meeting(Event) {
         }
 }
 
-function addperson(Event, message){
-            var t = "";
-            var args = message.content.split(/[ ]+/);
-            t = " <@" + args[1] + ">";
-            Event.str.push(t);
-            message.channel.send('Added User: ' + Event.str[Event.counter]);
-            Event.counter++;
+function addperson(Event, message, string){
+    var t = " <@" + string + ">";
+    Event.str.push(t);
+    message.channel.send('Added User: ' + Event.str[Event.counter]);
+    Event.counter++;
 }
+
+function displayRoster(Event, message, string){
+    var tempString = string;
+    if (Event.str.length>0){
+        message.delete();
+        message.channel.send('Current roster for ' + tempString + ": " + Event.str);
+    }
+    else{
+        message.delete();
+        message.channel.send('No one is signed up for ' + tempString);
+    }
+}
+
 
 function turnon(Event, message){
     Event.isActive = true;
@@ -116,7 +127,7 @@ function turnoff(Event, message){
 //comment for when the bot is ready
 client.on('ready',() => {
     console.log('Status:Online');
-     client.user.setGame('dead');
+     client.user.setGame('main version');
 });
 
 //=======================================================================================================================
@@ -175,54 +186,6 @@ client.on('message', message => {
         else {
             message.delete();
             message.channel.send('Officer Rank required to execute the command');
-        }
-    }
-
-    //Command for adding people wednesday
-    if (commandIs("addwed", message)) {
-        if (hasRole(message.member, "Officers")) {
-            message.delete();
-            addperson(Wednesday);
-        }
-        else {
-            message.delete();
-            message.channel.send('Only Officers can use this command');
-        }
-    }
-
-    //command for checking people assigned to wednesday
-    if (commandIs("wednesday", message)) {
-        if (Wednesday.str.length>0){
-            message.delete();
-            message.channel.send('Current roster for Wednesday:' + Wednesday.str);
-        }
-        else{
-            message.delete();
-            message.channel.send('No one is signed up for Wednesday')
-        }
-    }
-
-    //Command for adding people sunday
-    if (commandIs("addsun", message)) {
-        if(hasRole(message.member,"Officers")) {
-            message.delete();
-            addperson(Sunday);
-        }
-        else {
-            message.delete();
-            message.channel.send('Only Officers can use this command');
-        }
-    }
-
-    //command for checking people assigned to sunday
-    if (commandIs("sunday", message)) {
-        if (Sunday.str.length>0){
-            message.delete();
-            message.channel.send('Current roster for Sunday: ' + Sunday.str);
-        }
-        else{
-            message.delete();
-            message.channel.send('No one is signed up for Sunday')
         }
     }
 
@@ -300,6 +263,91 @@ client.on('message', message => {
         }
     }
 
+    //Display roster for given date
+    if (commandIs("roster", message)){
+        var args = message.content.split(/[ ]+/);
+        var ts = args[1];
+
+        if (ts == "monday"){
+            displayRoster(Monday, message, ts);
+        }
+
+        else if (ts == "tuesday"){
+            displayRoster(Tuesday, message, ts);
+        }
+
+        else if (ts == "wednesday"){
+            displayRoster(Wednesday, message, ts);
+        }
+
+        else if (ts == "thursday"){
+            displayRoster(Thursday, message, ts);
+        }
+
+        else if (ts == "friday"){
+            displayRoster(Friday, message, ts);           
+        }
+
+        else if (ts == "saturday"){
+            displayRoster(Saturday, message, ts);
+        }
+
+        else if (ts == "sunday"){
+            displayRoster(Sunday, message, ts);
+        }
+
+        else {
+            message.channel.send('Not valid argument or undefined argument');
+        }
+    }
+
+	//Command for adding people to a given event   
+    if (commandIs("add", message)){
+        if (hasRole(message.member, "Officers")){
+            var args = message.content.split(/[ ]+/); 
+            st = args[1];
+            day = args[2];
+
+            if (day == "monday"){
+                addperson(Monday, message, st);
+            }
+
+            else if (day == "tuesday"){
+                addperson(Tuesday, message, st);
+            }
+
+            else if (day == "wednesday"){
+                addperson(Wednesday, message, st);
+            }
+
+            else if (day == "thursday"){
+                addperson(Thursday, message, st);
+            }
+
+            else if (day == "friday"){
+                addperson(Friday, message, st);
+            }
+
+            else if (day == "saturday"){
+                addperson(Saturday, message, st);
+            }
+
+            else if (day == "sunday"){
+                addperson(Sunday, message, st);
+            }
+
+            else {
+                message.channel.send('Undefined arguments or invalid arguments')
+            }
+
+        }
+
+        else {
+            message.delete();
+            message.channel.send('Only Officers can use this command'); 
+        }
+    }
+
 //=======================================================================================================================
 
     //ROLL FUNCTION...
@@ -345,7 +393,7 @@ client.on('message', message => {
 
 setInterval(function () {
     var temp = new Date().getTime();
-    current = temp;
+    current  = temp;
 
     //RESET RESET RESET RESET RESET RESET RESET RESET RESET RESET
     if (current > reset) {

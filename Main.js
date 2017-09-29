@@ -149,10 +149,10 @@ client.on('message', message => {
     //help
     if (commandIs("help", message)) {
         message.delete();
-        message.channel.send('```\nCurrent list of Commands:\n!about          - information about the Bot\n!roll [D#] [X]  - Rolls a D# sided die X amount of times\n!wednesday      - Shows the current roster for Wednesday\n!sunday         - Shows the current roster for Sunday\n```');
+        message.channel.send('```\nCurrent list of Commands:\n!about          	- information about the Bot\n!roll [D#] [X]  	- Rolls a D# sided die X amount of times\n!roster [Day/Event] - Shows the current roster for the given event\n```');
         
         if (hasRole(message.member, "Officers")){
-            message.channel.send('```\nCurrent list of Officer commands:\n!addwed [userID]    - Adds a person to the roster for Wednesday\n!addsun [userID]    - Adds a person to the roster for Sunday\n!postprone          - Cancels the planned meeting for the day\n!meeting            - Announces a meeting for the day\n```')
+        	message.channel.send('```\nCurrent list of Officer commands:\n!add [userID] [Day/Event]   - Adds a person to the roster for Sunday\n!postprone          		- Cancels the planned meeting for the day\n!meeting            		- Announces a meeting for the day\n!enable [Day/Event]		 - Enable an event\n!disable [Day/Event]		- Disable an event\n```');
         }
     }
 
@@ -177,6 +177,7 @@ client.on('message', message => {
             message.channel.send('Officer Rank required to execute the command');
         }
     }
+    
     //Emergency meeting
     if (commandIs("meeting", message)) {
         if (hasRole(message.member, "Officers")) {
@@ -191,76 +192,86 @@ client.on('message', message => {
 
     //Enable
     if (commandIs("enable", message)) {
-        var args = message.content.split(/[ ]+/);
+        if(hasRole(message.member, "Officers")){
+        	var args = message.content.split(/[ ]+/);
 
-        if (args[1]=="monday"){
-            turnon(Monday, message);
-        }
+        	if (args[1]=="monday"){
+            	turnon(Monday, message);
+        	}
 
-        else if (args[1]=="tuesday"){
-            turnon(Tuesday, message);
-        }
+	        else if (args[1]=="tuesday"){
+	            turnon(Tuesday, message);
+	        }
 
-        else if (args[1]=="wednesday"){
-            turnon(Wednesday, message);
-        }
+	        else if (args[1]=="wednesday"){
+	            turnon(Wednesday, message);
+	        }
 
-        else if (args[1]=="thursday"){
-            turnon(Thursday, message);
-        }
+	        else if (args[1]=="thursday"){
+	            turnon(Thursday, message);
+	        }
 
-        else if (args[1]=="friday"){
-            turnon(Friday, message);
-        }
+	        else if (args[1]=="friday"){
+	            turnon(Friday, message);
+	        }
 
-        else if (args[1]=="saturday"){
-            turnon(Saturday, message);
-        }
+	        else if (args[1]=="saturday"){
+	            turnon(Saturday, message);
+	        }
 
-        else if (args[1]=="sunday"){
-            turnon(Sunday, message);
-        }
+	        else if (args[1]=="sunday"){
+	            turnon(Sunday, message);
+	        }
 
-        else{
-            message.channel.send('No defined argument or not a valid argument');
-        }
+	        else{
+	            message.channel.send('No defined argument or not a valid argument');
+	        }
+    	}
+    	else {
+    		message.channel.send('Only officers can use this command');
+    	}
     }
 
     //Disable
     if (commandIs("disable", message)) {
-        var args = message.content.split(/[ ]+/);
+        if(hasRole(message.member, "Officers")){
+	        var args = message.content.split(/[ ]+/);
 
-        if (args[1]=="monday"){
-            turnoff(Monday, message);
-        }
+	        if (args[1]=="monday"){
+	            turnoff(Monday, message);
+	        }
 
-        else if (args[1]=="tuesday"){
-            turnoff(Tuesday, message);
-        }
+	        else if (args[1]=="tuesday"){
+	            turnoff(Tuesday, message);
+	        }
 
-        else if (args[1]=="wednesday"){
-            turnoff(Wednesday, message);
-        }
+	        else if (args[1]=="wednesday"){
+	            turnoff(Wednesday, message);
+	        }
 
-        else if (args[1]=="thursday"){
-            turnoff(Thursday, message);
-        }
+	        else if (args[1]=="thursday"){
+	            turnoff(Thursday, message);
+	        }
 
-        else if (args[1]=="friday"){
-            turnoff(Friday, message);
-        }
+	        else if (args[1]=="friday"){
+	            turnoff(Friday, message);
+	        }
 
-        else if (args[1]=="saturday"){
-            turnoff(Saturday, message);
-        }
+	        else if (args[1]=="saturday"){
+	            turnoff(Saturday, message);
+	        }
 
-        else if (args[1]=="sunday"){
-            turnoff(Sunday, message);
-        }
+	        else if (args[1]=="sunday"){
+	            turnoff(Sunday, message);
+	        }
 
-        else{
-            message.channel.send('No defined argument or not a valid argument');
-        }
+	        else{
+	            message.channel.send('No defined argument or not a valid argument');
+	        }
+    	}
+    	else {
+    		message.channel.send('Only Officers can use this command');
+    	}
     }
 
     //Display roster for given date
@@ -367,24 +378,24 @@ client.on('message', message => {
                     numbers.push(" " + random);
                     n++;
                 }
-                message.channel.sendMessage('Rolled' + numbers);
+                message.channel.send('Rolled' + numbers);
             }
             else {
-                message.channel.sendMessage('inputs either too large or not valid inputs');
+                message.channel.send('inputs either too large or not valid inputs');
             }           
         }
         else if (args.length = 2){
             if (args[1] <= 1000) {
                 random = Math.floor((Math.random() * dice) + 1);
                 numbers.push(random);
-                message.channel.sendMessage('Rolled ' + numbers);
+                message.channel.send('Rolled ' + numbers);
             }
             else {
-                message.channel.sendMessage('input either too large or not a valid input');
+                message.channel.send('input either too large or not a valid input');
             }
         }
         else {
-            message.channel.sendMessage('not enough inputs');
+            message.channel.send('not enough inputs');
         }       
     }
 });

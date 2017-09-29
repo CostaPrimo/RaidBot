@@ -56,6 +56,7 @@ function hasRole(mem, role) {
     if (pluck(mem.roles).includes(role)) {
         return true;
     }
+    
     else {
         return false;
     }
@@ -78,6 +79,7 @@ function announce(Event) {
             client.channels.get(general).send('Raid starting in 1 hour!' + Event.str);
             Event.passed = true;
         }
+
         else {
             client.channels.get(general).send('Guild Missions starting in 1 hour');
             Event.passed = true;
@@ -86,7 +88,7 @@ function announce(Event) {
 }
 
 function meeting(Event) {
-    if (current >= Event.time && Event.roof >= current && Event.passed === false){
+    if (current >= Event.time && Event.roof >= current && Event.passed === false && Event.isActive == true){
             client.channels.get(OfFo).send('Meeting is starting @everyone');
             Event.passed = true;
         }
@@ -105,6 +107,7 @@ function displayRoster(Event, message, string){
         message.delete();
         message.channel.send('Current roster for ' + tempString + ": " + Event.str);
     }
+
     else{
         message.delete();
         message.channel.send('No one is signed up for ' + tempString);
@@ -152,7 +155,7 @@ client.on('message', message => {
         message.channel.send('```\nCurrent list of Commands:\n!about          	- information about the Bot\n!roll [D#] [X]  	- Rolls a D# sided die X amount of times\n!roster [Day/Event] - Shows the current roster for the given event\n```');
         
         if (hasRole(message.member, "Officers")){
-        	message.channel.send('```\nCurrent list of Officer commands:\n!add [userID] [Day/Event]   - Adds a person to the roster for Sunday\n!postprone          		- Cancels the planned meeting for the day\n!meeting            		- Announces a meeting for the day\n!enable [Day/Event]		 - Enable an event\n!disable [Day/Event]		- Disable an event\n```');
+        	message.channel.send('```\nCurrent list of Officer commands:\n!add [userID] [Day/Event]   - Adds a person to the roster for the event\n!postprone          		- Cancels the planned meeting for the day\n!meeting            		- Announces a meeting for the day\n!enable [Day/Event]		 - Enable an event\n!disable [Day/Event]		- Disable an event\n```');
         }
     }
 

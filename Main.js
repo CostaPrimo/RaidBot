@@ -98,7 +98,14 @@ function addperson(Event, message, string){
     var t = " <@" + string + ">";
     Event.str.push(t);
     message.channel.send('Added User: ' + Event.str[Event.counter]);
+    message.channel.send('User is assigned the number: ' + Event.counter);
     Event.counter++;
+}
+
+function removeperson(Event, message, int){
+    message.channel.send(Event.str[int] + ' Has been removed from the event');
+    Event.str.splice(int, 1);
+    Event.counter--;
 }
 
 function displayRoster(Event, message, string){
@@ -155,9 +162,10 @@ client.on('message', message => {
         message.channel.send('```\nCurrent list of Commands:\n!about          	- information about the Bot\n!roll [D#] [X]  	- Rolls a D# sided die X amount of times\n!roster [Day/Event] - Shows the current roster for the given event\n```');
         
         if (hasRole(message.member, "Officers")){
-        	message.channel.send('```\nCurrent list of Officer commands:\n!add [userID] [Day/Event]   - Adds a person to the roster for the event\n!postprone          		- Cancels the planned meeting for the day\n!meeting            		- Announces a meeting for the day\n!enable [Day/Event]		 - Enable an event\n!disable [Day/Event]		- Disable an event\n```');
+        	message.channel.send('```\nCurrent list of Officer commands:\n!add [userID] [Day/Event]   - Adds a person to the roster for the event\n!remove [Day/Event] [UserNr]- Removes the specified person from the roster for the event\n!postprone          		- Cancels the planned meeting for the day\n!meeting            		- Announces a meeting for the day\n!enable [Day/Event]		 - Enable an event\n!disable [Day/Event]		- Disable an event\n```');
         }
     }
+    
 
     //about
     if (commandIs("about", message)) {
@@ -362,6 +370,48 @@ client.on('message', message => {
         }
     }
 
+    if (commandIs("remove", message)){
+        if (hasRole(message.member, "Officers")){
+            var args = message.content.split(/[ ]+/);
+
+            if (args[1].toLowerCase()=="monday"){
+                removeperson(Monday, message, args[2]);
+            }
+
+            else if (args[1].toLowerCase()=="tuesday"){
+                removeperson(Monday, message, args[2]);
+            }
+
+            else if (args[1].toLowerCase()=="wednesday"){
+                removeperson(Monday, message, args[2]);
+            }
+
+            else if (args[1].toLowerCase()=="thursday"){
+                removeperson(Monday, message, args[2]);
+            }
+
+            else if (args[1].toLowerCase()=="friday"){
+                removeperson(Monday, message, args[2]);
+            }
+
+            else if (args[1].toLowerCase()=="saturday"){
+                removeperson(Monday, message, args[2]);
+            }
+
+            else if (args[1].toLowerCase()=="sunday"){
+                removeperson(Monday, message, args[2]);
+            }
+
+            else{
+                message.channel.send('Undefined arguments or invalid arguments')
+            }
+        }
+
+        else{
+            message.delete();
+            message.channel.send('Only Officers can use this command'); 
+        }
+    }
 //=======================================================================================================================
 
     //ROLL FUNCTION...

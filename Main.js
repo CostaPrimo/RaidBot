@@ -130,7 +130,7 @@ function turnoff(Event, message){
 //comment for when the bot is ready
 client.on('ready',() => {
     console.log('Status:Online');
-     client.user.setGame('main version');
+     client.user.setGame('Main version');
 });
 
 //=======================================================================================================================
@@ -198,31 +198,31 @@ client.on('message', message => {
         if(hasRole(message.member, "Officers")){
         	var args = message.content.split(/[ ]+/);
 
-        	if (args[1]=="monday"){
+        	if (args[1].toLowerCase()=="monday"){
             	turnon(Monday, message);
         	}
 
-	        else if (args[1]=="tuesday"){
+	        else if (args[1].toLowerCase()=="tuesday"){
 	            turnon(Tuesday, message);
 	        }
 
-	        else if (args[1]=="wednesday"){
+	        else if (args[1].toLowerCase()=="wednesday"){
 	            turnon(Wednesday, message);
 	        }
 
-	        else if (args[1]=="thursday"){
+	        else if (args[1].toLowerCase()=="thursday"){
 	            turnon(Thursday, message);
 	        }
 
-	        else if (args[1]=="friday"){
+	        else if (args[1].toLowerCase()=="friday"){
 	            turnon(Friday, message);
 	        }
 
-	        else if (args[1]=="saturday"){
+	        else if (args[1].toLowerCase()=="saturday"){
 	            turnon(Saturday, message);
 	        }
 
-	        else if (args[1]=="sunday"){
+	        else if (args[1].toLowerCase()=="sunday"){
 	            turnon(Sunday, message);
 	        }
 
@@ -240,31 +240,31 @@ client.on('message', message => {
         if(hasRole(message.member, "Officers")){
 	        var args = message.content.split(/[ ]+/);
 
-	        if (args[1]=="monday"){
+	        if (args[1].toLowerCase()=="monday"){
 	            turnoff(Monday, message);
 	        }
 
-	        else if (args[1]=="tuesday"){
+	        else if (args[1].toLowerCase()=="tuesday"){
 	            turnoff(Tuesday, message);
 	        }
 
-	        else if (args[1]=="wednesday"){
+	        else if (args[1].toLowerCase()=="wednesday"){
 	            turnoff(Wednesday, message);
 	        }
 
-	        else if (args[1]=="thursday"){
+	        else if (args[1].toLowerCase()=="thursday"){
 	            turnoff(Thursday, message);
 	        }
 
-	        else if (args[1]=="friday"){
+	        else if (args[1].toLowerCase()=="friday"){
 	            turnoff(Friday, message);
 	        }
 
-	        else if (args[1]=="saturday"){
+	        else if (args[1].toLowerCase()=="saturday"){
 	            turnoff(Saturday, message);
 	        }
 
-	        else if (args[1]=="sunday"){
+	        else if (args[1].toLowerCase()=="sunday"){
 	            turnoff(Sunday, message);
 	        }
 
@@ -282,31 +282,31 @@ client.on('message', message => {
         var args = message.content.split(/[ ]+/);
         var ts = args[1];
 
-        if (ts == "monday"){
+        if (ts.toLowerCase() == "monday"){
             displayRoster(Monday, message, ts);
         }
 
-        else if (ts == "tuesday"){
+        else if (ts.toLowerCase() == "tuesday"){
             displayRoster(Tuesday, message, ts);
         }
 
-        else if (ts == "wednesday"){
+        else if (ts.toLowerCase() == "wednesday"){
             displayRoster(Wednesday, message, ts);
         }
 
-        else if (ts == "thursday"){
+        else if (ts.toLowerCase() == "thursday"){
             displayRoster(Thursday, message, ts);
         }
 
-        else if (ts == "friday"){
+        else if (ts.toLowerCase() == "friday"){
             displayRoster(Friday, message, ts);           
         }
 
-        else if (ts == "saturday"){
+        else if (ts.toLowerCase() == "saturday"){
             displayRoster(Saturday, message, ts);
         }
 
-        else if (ts == "sunday"){
+        else if (ts.toLowerCase() == "sunday"){
             displayRoster(Sunday, message, ts);
         }
 
@@ -322,31 +322,31 @@ client.on('message', message => {
             st = args[1];
             day = args[2];
 
-            if (day == "monday"){
+            if (day.toLowerCase() == "monday"){
                 addperson(Monday, message, st);
             }
 
-            else if (day == "tuesday"){
+            else if (day.toLowerCase() == "tuesday"){
                 addperson(Tuesday, message, st);
             }
 
-            else if (day == "wednesday"){
+            else if (day.toLowerCase() == "wednesday"){
                 addperson(Wednesday, message, st);
             }
 
-            else if (day == "thursday"){
+            else if (day.toLowerCase() == "thursday"){
                 addperson(Thursday, message, st);
             }
 
-            else if (day == "friday"){
+            else if (day.toLowerCase() == "friday"){
                 addperson(Friday, message, st);
             }
 
-            else if (day == "saturday"){
+            else if (day.toLowerCase() == "saturday"){
                 addperson(Saturday, message, st);
             }
 
-            else if (day == "sunday"){
+            else if (day.toLowerCase() == "sunday"){
                 addperson(Sunday, message, st);
             }
 
@@ -392,6 +392,12 @@ client.on('message', message => {
                 random = Math.floor((Math.random() * dice) + 1);
                 numbers.push(random);
                 message.channel.send('Rolled ' + numbers);
+                if (random == 1 && dice == 20){
+                    message.channel.send('', new Discord.Attachment('div/rolled1.png'));
+                }
+                else if (random == 20 && dice == 20){
+                    message.channel.send('', new Discord.Attachment('div/rolled20.jpg'));
+                }
             }
             else {
                 message.channel.send('input either too large or not a valid input');

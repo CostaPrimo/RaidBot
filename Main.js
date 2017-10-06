@@ -1,18 +1,27 @@
 const Discord = require('Discord.js');
-const client = new Discord.Client();
+const client  = new Discord.Client();
+/* Create KeyCode.js with the following code:
+module.exports = {
+   getKey: function() {
+      return 'TOKEN';
+   }
+}
+*/
+const KeyCode = require('./KeyCode.js');
+var   key     = KeyCode.getKey();
 
 //=======================================================================================================================
 
 //Classes
 class Event{
     constructor(bol1, bol2, Date1) {
-    this.time     = Date1;
-    this.passed   = false;
-    this.roof;
-    this.str      = [];
-    this.counter  = 0;
-    this.isRaid   = bol1;
-    this.isActive = bol2
+        this.time     = Date1;
+        this.passed   = false;
+        this.roof;
+        this.str      = [];
+        this.counter  = 0;
+        this.isRaid   = bol1;
+        this.isActive = bol2
     } 
 }
 
@@ -500,5 +509,5 @@ setInterval(function () {
 
 //=======================================================================================================================
 
-//HERE BE TOKEN
-client.login('MjkzMzg1NDU1OTMwNzAzODcz.C7F0DA.RhECkZEOwYmV9EVykFRJKAu8bt4');
+//Login
+client.login(key);

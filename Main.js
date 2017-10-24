@@ -130,7 +130,6 @@ function displayRoster(Event, message, string){
     }
 }
 
-
 function turnon(Event, message){
     Event.isActive = true;
     message.channel.send('Event is now enabled')
@@ -175,7 +174,6 @@ client.on('message', message => {
         }
     }
     
-
     //about
     if (commandIs("about", message)) {
         message.delete();

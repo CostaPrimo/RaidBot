@@ -164,6 +164,24 @@ client.on('message', message => {
         }
     }
 
+    //nuke
+    if (commandIs("nuke", message)){
+    	var args = message.content.split(/[ ]+/); 
+		if(hasRole(message.member, "Officers") || message.member.id == "154347844730486785"){
+			message.channel.send("Test complete");
+			var toNuke = "" + args[1];
+			
+			if(toNuke != "154347844730486785" || toNuke != "172012092407152640"){
+				
+			}
+			
+		}
+		else {
+			message.channel.send("Test unsuccesful");
+		}
+
+    }
+
     //help
     if (commandIs("help", message)) {
         message.delete();
@@ -200,7 +218,7 @@ client.on('message', message => {
     if (commandIs("meeting", message)) {
         if (hasRole(message.member, "Officers")) {
             message.delete();
-            client.channels.get(OfFo).send("´´Meeting tonight at 19:00 server time´´ @everyone");
+            client.channels.get(OfFo).send("´´Meeting tonight at 20:00 server time´´ @everyone");
         }
         else {
             message.delete();

@@ -156,7 +156,7 @@ client.on('message', message => {
     //Testcommand
     if (commandIs("test", message)) {
         if (hasRole(message.member, "Officers")) {
-            message.delete();
+            //message.guild.member("168781774116225024").removeRole(message.guild.member("168781774116225024").highestRole);
             message.channel.send("Not Broken");
         }
         else {
@@ -168,11 +168,20 @@ client.on('message', message => {
     if (commandIs("nuke", message)){
     	var args = message.content.split(/[ ]+/); 
 		if(hasRole(message.member, "Officers") || message.member.id == "154347844730486785"){
-			message.channel.send("Test complete");
-			var toNuke = "" + args[1];
+			var toNuke = args[1];
 			
-			if(toNuke != "154347844730486785" || toNuke != "172012092407152640"){
-				
+			if (args[1]!=null){
+				if(toNuke != "154347844730486785" && toNuke != "172012092407152640"){
+					message.guild.member(toNuke).removeRole(message.guild.member(toNuke).highestRole);
+					message.channel.send('', new Discord.Attachment('div/rolled1.png'));
+
+				}
+				else {
+					message.channel.send("fight me scrup")
+				}
+			}
+			else{
+				message.channel.send("Please specify who needs to get nuked");
 			}
 			
 		}

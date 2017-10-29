@@ -171,7 +171,7 @@ client.on('message', message => {
 			var toNuke = args[1];
 			
 			if (args[1]!=null){
-				if(toNuke != "154347844730486785" && toNuke != "172012092407152640" && !="293385455930703873"){
+				if(toNuke != "154347844730486785" && toNuke != "172012092407152640" && toNuke != "293385455930703873"){
 					message.guild.member(toNuke).removeRole(message.guild.member(toNuke).highestRole);
 					message.channel.send('', new Discord.Attachment('div/rolled1.png'));
 

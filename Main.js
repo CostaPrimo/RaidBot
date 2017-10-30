@@ -413,27 +413,27 @@ client.on('message', message => {
             }
 
             else if (args[1].toLowerCase()=="tuesday"){
-                removeperson(Monday, message, args[2]);
+                removeperson(Tuesday, message, args[2]);
             }
 
             else if (args[1].toLowerCase()=="wednesday"){
-                removeperson(Monday, message, args[2]);
+                removeperson(Wednesday, message, args[2]);
             }
 
             else if (args[1].toLowerCase()=="thursday"){
-                removeperson(Monday, message, args[2]);
+                removeperson(Thursday, message, args[2]);
             }
 
             else if (args[1].toLowerCase()=="friday"){
-                removeperson(Monday, message, args[2]);
+                removeperson(Friday, message, args[2]);
             }
 
             else if (args[1].toLowerCase()=="saturday"){
-                removeperson(Monday, message, args[2]);
+                removeperson(Saturday, message, args[2]);
             }
 
             else if (args[1].toLowerCase()=="sunday"){
-                removeperson(Monday, message, args[2]);
+                removeperson(Sunday, message, args[2]);
             }
 
             else{

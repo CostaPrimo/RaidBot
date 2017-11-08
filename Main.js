@@ -157,10 +157,10 @@ client.on('message', message => {
     if (commandIs("test", message)) {
         if (hasRole(message.member, "Officers")) {
             //message.guild.member("168781774116225024").removeRole(message.guild.member("168781774116225024").highestRole);
-            message.channel.send("Not Broken");
+            message.channel.send("Not Broken (but Mirage is)");
         }
         else {
-            message.channel.send('Broken');
+            message.channel.send('Broken (just like Mirage)');
         }
     }
 
@@ -207,6 +207,8 @@ client.on('message', message => {
         message.channel.send('', new Discord.Attachment('div/toptem.jpg'));
         setTimeout(function(){
             message.channel.send('Hello! Im RaidBot! \nMy purpose is to handle and announce events.\nUse ``!help`` to get the list of commands');
+            message.channel.send('Link to the project repository:');
+            message.channel.send('https://github.com/CostaPrimo/RaidBot');
         }, 500);
     }
 
@@ -220,6 +222,7 @@ client.on('message', message => {
         else {
             message.delete();
             message.channel.send('Officer Rank required to execute the command');
+            message.channel.send('', new Discord.Attachment('div/Purge.gif'));
         }
     }
     
@@ -228,10 +231,12 @@ client.on('message', message => {
         if (hasRole(message.member, "Officers")) {
             message.delete();
             client.channels.get(OfFo).send("´´Meeting tonight at 20:00 server time´´ @everyone");
+            message.channel.send('', new Discord.Attachment('div/Greet.jpg'));
         }
         else {
             message.delete();
             message.channel.send('Officer Rank required to execute the command');
+            message.channel.send('', new Discord.Attachment('div/Purge.gif'));
         }
     }
 
@@ -274,6 +279,7 @@ client.on('message', message => {
     	}
     	else {
     		message.channel.send('Only officers can use this command');
+    		message.channel.send('', new Discord.Attachment('div/Purge.gif'));
     	}
     }
 
@@ -316,6 +322,7 @@ client.on('message', message => {
     	}
     	else {
     		message.channel.send('Only Officers can use this command');
+    		message.channel.send('', new Discord.Attachment('div/Purge.gif'));
     	}
     }
 
@@ -401,6 +408,7 @@ client.on('message', message => {
         else {
             message.delete();
             message.channel.send('Only Officers can use this command'); 
+            message.channel.send('', new Discord.Attachment('div/Purge.gif'));
         }
     }
 
@@ -444,6 +452,7 @@ client.on('message', message => {
         else{
             message.delete();
             message.channel.send('Only Officers can use this command'); 
+            message.channel.send('', new Discord.Attachment('div/Purge.gif'));
         }
     }
 //=======================================================================================================================

@@ -173,7 +173,8 @@ client.on('message', message => {
 			if (args[1]!=null){
 				if(toNuke != "154347844730486785" && toNuke != "172012092407152640" && toNuke != "293385455930703873"){
 					message.guild.member(toNuke).removeRole(message.guild.member(toNuke).highestRole);
-					message.channel.send('', new Discord.Attachment('div/rolled1.png'));
+					message.channel.send("<@"+ args[1] + "> " + "it's too late!\n**Exodia Obliterate!**");
+					message.channel.send('https://giphy.com/gifs/Po7oRxAIih95e');
 
 				}
 				else {
@@ -186,7 +187,7 @@ client.on('message', message => {
 			
 		}
 		else {
-			message.channel.send("Test unsuccesful");
+			message.channel.send("Nuclear launch codes required");
 		}
 
     }

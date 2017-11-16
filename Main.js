@@ -112,9 +112,17 @@ function addperson(Event, message, string){
 }
 
 function removeperson(Event, message, int){
-    message.channel.send(Event.str[int] + ' Has been removed from the event');
-    Event.str.splice(int, 1);
-    Event.counter--;
+    if(int>=Event.str.length || int<0){
+    	message.channel.send('number not currently assigned to an user (out of bounds)');
+    }
+    else {
+	    message.channel.send(Event.str[int] + ' Has been removed from the event');
+	    Event.str.splice(int, 1);
+	    Event.counter--;
+	    for(i = int; i<Event.str.length; i++){
+	    	message.channel.send(Event.str[i] + ' Your new assigned number is ' + i);
+	    }
+	}
 }
 
 function displayRoster(Event, message, string){
@@ -464,38 +472,48 @@ client.on('message', message => {
         var random = 0;
         var numbers = [];
         var args = message.content.split(/[ ]+/);
-        var dice = args[1];
+        var dice = Math.floor(args[1]);
         var amount = 0;
-        amount = args[2];
+        amount = Math.floor(args[2]);
 
         if (args.length > 2) {
-            if (args[2]<=100 && args[1]<=100){        
-                while (amount >= n) {
-                    random = Math.floor((Math.random() * dice) + 1);
-                    numbers.push(" " + random);
-                    n++;
-                }
-                message.channel.send('Rolled' + numbers);
+        	if(amount > 1 && dice > 1){
+	            if (amount<=100 && dice<=100){        
+	                while (amount >= n) {
+	                    random = Math.floor((Math.random() * dice) + 1);
+	                   	numbers.push(" " + random);
+	                    n++;
+	                }
+	                message.channel.send('Rolled' + numbers);
+	            }
+	            else {
+	                message.channel.send('inputs either too large or not valid inputs');
+	            }
             }
-            else {
-                message.channel.send('inputs either too large or not valid inputs');
+            else{
+            	message.channel.send('please only use numbers greater than 1');
             }           
         }
         else if (args.length = 2){
-            if (args[1] <= 1000) {
-                random = Math.floor((Math.random() * dice) + 1);
-                numbers.push(random);
-                message.channel.send('Rolled ' + numbers);
-                if (random == 1 && dice == 20){
-                    message.channel.send('', new Discord.Attachment('div/rolled1.png'));
-                }
-                else if (random == 20 && dice == 20){
-                    message.channel.send('', new Discord.Attachment('div/rolled20.jpg'));
-                }
-            }
-            else {
-                message.channel.send('input either too large or not a valid input');
-            }
+        	if(dice > 1){
+	            if (dice <= 1000) {
+	                random = Math.floor((Math.random() * dice) + 1);
+	                numbers.push(random);
+	                message.channel.send('Rolled ' + numbers);
+	                if (random == 1 && dice == 20){
+	                    message.channel.send('', new Discord.Attachment('div/rolled1.png'));
+	                }
+	                else if (random == 20 && dice == 20){
+	                    message.channel.send('', new Discord.Attachment('div/rolled20.jpg'));
+	                }
+	            }
+	            else {
+	                message.channel.send('input either too large or not a valid input');
+	            }
+        	}
+        	else {
+        		message.channel.send('please only use numbers greater than 1');
+        	}
         }
         else {
             message.channel.send('not enough inputs');

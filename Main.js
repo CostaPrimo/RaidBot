@@ -36,18 +36,21 @@ var raiding     = '321707816199127041';
 //=======================================================================================================================
 
 //Events + Dates
-var Monday    = new Event(false, false,  new Date(2017, 8, 4,  19).getTime());
-var Tuesday   = new Event(false, false,  new Date(2017, 8, 5,  20).getTime());
-var Wednesday = new Event(true,  false,  new Date(2017, 8, 6,  20).getTime());
-var Thursday  = new Event(false, false,  new Date(2017, 8, 7,  20).getTime());
-var Friday    = new Event(true,  false, new Date(2017, 8, 8,  20).getTime());
-var Saturday  = new Event(false, false, new Date(2017, 8, 9,  21).getTime());
-var Sunday    = new Event(true,  false,  new Date(2017, 8, 10, 19).getTime());
+var Monday    = new Event(false, false,  new Date(2018, 3, 17,  19).getTime());
+var Tuesday   = new Event(false, false,  new Date(2018, 3, 17,  20).getTime());
+var Wednesday = new Event(true,  false,  new Date(2018, 3, 18,  20).getTime());
+var Thursday  = new Event(false, false,  new Date(2018, 3, 19,  20).getTime());
+var Friday    = new Event(true,  false, new Date(2018, 3, 20,  20).getTime());
+var Saturday  = new Event(false, false, new Date(2018, 3, 21,  21).getTime());
+var Sunday    = new Event(true,  false,  new Date(2018, 3, 22, 19).getTime());
+
+var eventArray = [Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday];
+var eventNameArray = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
 //=======================================================================================================================
 
 //Reset Stuff
-var reset   = new Date(2017, 8, 10, 23, 59).getTime();
+var reset   = new Date(2017, 11, 10, 23, 59).getTime();
 var current = new Date().getTime();
 
 //=======================================================================================================================
@@ -254,37 +257,16 @@ client.on('message', message => {
         if(hasRole(message.member, "Officers")){
         	var args = message.content.split(/[ ]+/);
 
-        	if (args[1].toLowerCase()=="monday"){
-            	turnon(Monday, message);
-        	}
-
-	        else if (args[1].toLowerCase()=="tuesday"){
-	            turnon(Tuesday, message);
-	        }
-
-	        else if (args[1].toLowerCase()=="wednesday"){
-	            turnon(Wednesday, message);
-	        }
-
-	        else if (args[1].toLowerCase()=="thursday"){
-	            turnon(Thursday, message);
-	        }
-
-	        else if (args[1].toLowerCase()=="friday"){
-	            turnon(Friday, message);
-	        }
-
-	        else if (args[1].toLowerCase()=="saturday"){
-	            turnon(Saturday, message);
-	        }
-
-	        else if (args[1].toLowerCase()=="sunday"){
-	            turnon(Sunday, message);
-	        }
-
-	        else{
-	            message.channel.send('No defined argument or not a valid argument');
-	        }
+            for(var x = 0; x<eventNameArray.length;x++){
+                var eventName = eventNameArray[x];
+                if(args[1].toLowerCase() == eventName){
+                    turnon(eventArray[x], message);
+                    break;
+                }
+                else if(x==eventNameArray.length-1){
+                    message.channel.send('No events matching the given argument');
+                }
+            }
     	}
     	else {
     		message.channel.send('Only officers can use this command');
@@ -297,37 +279,16 @@ client.on('message', message => {
         if(hasRole(message.member, "Officers")){
 	        var args = message.content.split(/[ ]+/);
 
-	        if (args[1].toLowerCase()=="monday"){
-	            turnoff(Monday, message);
-	        }
-
-	        else if (args[1].toLowerCase()=="tuesday"){
-	            turnoff(Tuesday, message);
-	        }
-
-	        else if (args[1].toLowerCase()=="wednesday"){
-	            turnoff(Wednesday, message);
-	        }
-
-	        else if (args[1].toLowerCase()=="thursday"){
-	            turnoff(Thursday, message);
-	        }
-
-	        else if (args[1].toLowerCase()=="friday"){
-	            turnoff(Friday, message);
-	        }
-
-	        else if (args[1].toLowerCase()=="saturday"){
-	            turnoff(Saturday, message);
-	        }
-
-	        else if (args[1].toLowerCase()=="sunday"){
-	            turnoff(Sunday, message);
-	        }
-
-	        else{
-	            message.channel.send('No defined argument or not a valid argument');
-	        }
+            for(var x = 0; x<eventNameArray.length;x++){
+                var eventName = eventNameArray[x];
+                if(args[1].toLowerCase() == eventName){
+                    turnoff(eventArray[x], message);
+                    break;
+                }
+                else if(x==eventNameArray.length-1){
+                    message.channel.send('No events matching the given argument');
+                }
+            }
     	}
     	else {
     		message.channel.send('Only Officers can use this command');
@@ -340,36 +301,15 @@ client.on('message', message => {
         var args = message.content.split(/[ ]+/);
         var ts = args[1];
 
-        if (ts.toLowerCase() == "monday"){
-            displayRoster(Monday, message, ts);
-        }
-
-        else if (ts.toLowerCase() == "tuesday"){
-            displayRoster(Tuesday, message, ts);
-        }
-
-        else if (ts.toLowerCase() == "wednesday"){
-            displayRoster(Wednesday, message, ts);
-        }
-
-        else if (ts.toLowerCase() == "thursday"){
-            displayRoster(Thursday, message, ts);
-        }
-
-        else if (ts.toLowerCase() == "friday"){
-            displayRoster(Friday, message, ts);           
-        }
-
-        else if (ts.toLowerCase() == "saturday"){
-            displayRoster(Saturday, message, ts);
-        }
-
-        else if (ts.toLowerCase() == "sunday"){
-            displayRoster(Sunday, message, ts);
-        }
-
-        else {
-            message.channel.send('Not valid argument or undefined argument');
+        for(var x = 0; x<eventNameArray.length;x++){
+                var eventName = eventNameArray[x];
+                if(ts.toLowerCase() == eventName){
+                    displayRoster(eventArray[x], message, ts);
+                    break;
+                }
+                else if(x==eventNameArray.length-1){
+                    message.channel.send('No events matching the given argument');
+                }
         }
     }
 
@@ -380,38 +320,16 @@ client.on('message', message => {
             st = args[1];
             day = args[2];
 
-            if (day.toLowerCase() == "monday"){
-                addperson(Monday, message, st);
+            for(var x = 0; x<eventNameArray.length;x++){
+                var eventName = eventNameArray[x];
+                if(day.toLowerCase() == eventName){
+                    addperson(eventArray[x], message, st);
+                    break;
+                }
+                else if(x==eventNameArray.length-1){
+                    message.channel.send('No events matching the given argument');
+                }
             }
-
-            else if (day.toLowerCase() == "tuesday"){
-                addperson(Tuesday, message, st);
-            }
-
-            else if (day.toLowerCase() == "wednesday"){
-                addperson(Wednesday, message, st);
-            }
-
-            else if (day.toLowerCase() == "thursday"){
-                addperson(Thursday, message, st);
-            }
-
-            else if (day.toLowerCase() == "friday"){
-                addperson(Friday, message, st);
-            }
-
-            else if (day.toLowerCase() == "saturday"){
-                addperson(Saturday, message, st);
-            }
-
-            else if (day.toLowerCase() == "sunday"){
-                addperson(Sunday, message, st);
-            }
-
-            else {
-                message.channel.send('Undefined arguments or invalid arguments')
-            }
-
         }
 
         else {
@@ -424,36 +342,15 @@ client.on('message', message => {
         if (hasRole(message.member, "Officers")){
             var args = message.content.split(/[ ]+/);
 
-            if (args[1].toLowerCase()=="monday"){
-                removeperson(Monday, message, args[2]);
-            }
-
-            else if (args[1].toLowerCase()=="tuesday"){
-                removeperson(Tuesday, message, args[2]);
-            }
-
-            else if (args[1].toLowerCase()=="wednesday"){
-                removeperson(Wednesday, message, args[2]);
-            }
-
-            else if (args[1].toLowerCase()=="thursday"){
-                removeperson(Thursday, message, args[2]);
-            }
-
-            else if (args[1].toLowerCase()=="friday"){
-                removeperson(Friday, message, args[2]);
-            }
-
-            else if (args[1].toLowerCase()=="saturday"){
-                removeperson(Saturday, message, args[2]);
-            }
-
-            else if (args[1].toLowerCase()=="sunday"){
-                removeperson(Sunday, message, args[2]);
-            }
-
-            else{
-                message.channel.send('Undefined arguments or invalid arguments')
+            for(var x = 0; x<eventNameArray.length;x++){
+                var eventName = eventNameArray[x];
+                if(args[1].toLowerCase() == eventName){
+                    removeperson(eventArray[x], message, args[2]);
+                    break;
+                }
+                else if(x==eventNameArray.length-1){
+                    message.channel.send('No events matching the given argument');
+                }
             }
         }
 
@@ -464,6 +361,8 @@ client.on('message', message => {
         }
     }
 //=======================================================================================================================
+
+
 
     //ROLL FUNCTION...
     if (commandIs("roll", message)) {
@@ -551,25 +450,19 @@ setInterval(function () {
 
     //RESET RESET RESET RESET RESET RESET RESET RESET RESET RESET
     if (current > reset) {
-        newtime(Monday);
-        newtime(Tuesday);
-        newtime(Wednesday);
-        newtime(Thursday);
-        newtime(Friday);
-        newtime(Saturday);
-        newtime(Sunday);
+        for(var x=0;x<eventArray.length;x++){
+            newtime(eventArray[x]);
+        }
+        //newtime(Sunday);
 
         reset += 604800000;
     }
 
     else if (current < reset) {
-        roofupdate(Monday);
-        roofupdate(Tuesday);
-        roofupdate(Wednesday);
-        roofupdate(Thursday);
-        roofupdate(Friday);
-        roofupdate(Saturday);
-        roofupdate(Sunday);
+        for(var x=0;x<eventArray.length;x++){
+            roofupdate(eventArray[x]);
+        }
+        //roofupdate(Sunday);
 
         meeting(Monday);
         announce(Tuesday);

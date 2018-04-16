@@ -36,13 +36,13 @@ var raiding     = '321707816199127041';
 //=======================================================================================================================
 
 //Events + Dates
-var Monday    = new Event(false, true,  new Date(2017, 8, 4,  19).getTime());
-var Tuesday   = new Event(false, true,  new Date(2017, 8, 5,  20).getTime());
-var Wednesday = new Event(true,  true,  new Date(2017, 8, 6,  20).getTime());
-var Thursday  = new Event(false, true,  new Date(2017, 8, 7,  20).getTime());
+var Monday    = new Event(false, false,  new Date(2017, 8, 4,  19).getTime());
+var Tuesday   = new Event(false, false,  new Date(2017, 8, 5,  20).getTime());
+var Wednesday = new Event(true,  false,  new Date(2017, 8, 6,  20).getTime());
+var Thursday  = new Event(false, false,  new Date(2017, 8, 7,  20).getTime());
 var Friday    = new Event(true,  false, new Date(2017, 8, 8,  20).getTime());
 var Saturday  = new Event(false, false, new Date(2017, 8, 9,  21).getTime());
-var Sunday    = new Event(true,  true,  new Date(2017, 8, 10, 19).getTime());
+var Sunday    = new Event(true,  false,  new Date(2017, 8, 10, 19).getTime());
 
 //=======================================================================================================================
 
@@ -175,14 +175,14 @@ client.on('message', message => {
     //nuke
     if (commandIs("nuke", message)){
     	var args = message.content.split(/[ ]+/); 
-		if(hasRole(message.member, "Officers") || message.member.id == "154347844730486785"){
+		if(hasRole(message.member, "Loli Wanker") || message.member.id == "154347844730486785"){
 			var toNuke = args[1];
 			
 			if (args[1]!=null){
 				if(toNuke != "154347844730486785" && toNuke != "172012092407152640" && toNuke != "293385455930703873"){
 					message.guild.member(toNuke).removeRole(message.guild.member(toNuke).highestRole);
-					message.channel.send("<@"+ args[1] + "> " + "it's too late!\n**Exodia Obliterate!**");
-					message.channel.send('https://giphy.com/gifs/Po7oRxAIih95e');
+					message.channel.send("<@"+ args[1] + "> " + "it's too late!\n**NUCLEAR LAUNCH DETECTED!**");
+					message.channel.send('https://www.tenor.co/HUPX.gif ');
 
 				}
 				else {
@@ -416,8 +416,7 @@ client.on('message', message => {
 
         else {
             message.delete();
-            message.channel.send('Only Officers can use this command'); 
-            message.channel.send('', new Discord.Attachment('div/Purge.gif'));
+            message.channel.send('Only Officers can use this command', new Discord.Attachment('div/Purge.gif'));
         }
     }
 
@@ -468,56 +467,79 @@ client.on('message', message => {
 
     //ROLL FUNCTION...
     if (commandIs("roll", message)) {
-        var n = 1;
-        var random = 0;
-        var numbers = [];
+        var rolls = [];
         var args = message.content.split(/[ ]+/);
-        var dice = Math.floor(args[1]);
-        var amount = 0;
-        amount = Math.floor(args[2]);
-
-        if (args.length > 2) {
-        	if(amount > 1 && dice > 1){
-	            if (amount<=100 && dice<=100){        
-	                while (amount >= n) {
-	                    random = Math.floor((Math.random() * dice) + 1);
-	                   	numbers.push(" " + random);
-	                    n++;
-	                }
-	                message.channel.send('Rolled' + numbers);
-	            }
-	            else {
-	                message.channel.send('inputs either too large or not valid inputs');
-	            }
+        if (args.length!=2){
+            message.channel.send('How to Roll:\n```Use !roll [X]D[Y] to roll\nX = amount of rolls\nY = Die type (D4, D6, D8..)\nExample: !roll 6D20```');
+        }
+        else{
+            var dievalues = args[1].split("D");
+            if(dievalues.length!=2){
+                message.channel.send('Please use the proper roll format\n```Use !roll [X]D[Y] to roll\nX = amount of rolls\nY = Die type (D4, D6, D8..)\nExample: !roll 6D20```')
             }
             else{
-            	message.channel.send('please only use numbers greater than 1');
-            }           
-        }
-        else if (args.length = 2){
-        	if(dice > 1){
-	            if (dice <= 1000) {
-	                random = Math.floor((Math.random() * dice) + 1);
-	                numbers.push(random);
-	                message.channel.send('Rolled ' + numbers);
-	                if (random == 1 && dice == 20){
-	                    message.channel.send('', new Discord.Attachment('div/rolled1.png'));
-	                }
-	                else if (random == 20 && dice == 20){
-	                    message.channel.send('', new Discord.Attachment('div/rolled20.jpg'));
-	                }
-	            }
-	            else {
-	                message.channel.send('input either too large or not a valid input');
-	            }
-        	}
-        	else {
-        		message.channel.send('please only use numbers greater than 1');
-        	}
-        }
-        else {
-            message.channel.send('not enough inputs');
-        }       
+                if (dievalues[0]==1 && dievalues[1]==20){
+                    var RNG = Math.floor(Math.random()*20)+1;
+                    if(RNG ==1){
+                        message.channel.send('CRITICAL FAILURE', new Discord.Attachment('div/rolled1.PNG'));
+                    }
+                    else if(RNG == 20){
+                        message.channel.send('OVERWHELMING SUCCESS', new Discord.Attachment('div/rolled20.JPG'));
+                    }
+                    else{
+                        message.channel.send('you rolled: '+ RNG);
+                    }
+                }
+                else if(dievalues[0]>0 && dievalues[0]<1000 && dievalues[1]>0 && dievalues[1]<1000){
+                    for(var n = 1; n<=dievalues[0];n++){
+                        rolls.push(Math.floor(Math.random()*dievalues[1])+1);
+                    }
+                    var sum = 0;
+                    for(var x= 0; x<rolls.length; x++){
+                        sum += rolls[x];
+                    }
+
+
+                    if (rolls.length>100){
+                        var output = [];
+                        var i = 0;
+                        
+                        while(i<rolls.length){
+                            var placeholder = "";
+                            for(var x = 1; x<=100; x++){
+                                placeholder += rolls[i] + ", ";
+                                i++;
+                                if(i==rolls.length){
+                                    break;
+                                }
+                            }
+                            output.push(placeholder);
+                        }
+                        message.channel.send('You have rolled:');
+                        for(var y = 0; y<output.length;y++){
+                            message.channel.send(output[y]);
+                        }
+                        setTimeout(function(){
+                            message.channel.send('your total is: ' + sum);
+                        }, 2000);
+                    }
+                    else{
+                        
+                        message.channel.send('you rolled: ' + rolls);
+                        message.channel.send('your total is: ' + sum);
+                    }
+                }
+                else if (dievalues[0]<0 || dievalues[1]<0){
+                    message.channel.send('Please only use positive numbers');
+                }
+                else if (dievalues[0]>=1000 || dievalues[1]>=1000){
+                    message.channel.send('Please only use numbers lower than 1000');
+                }
+                else{
+                    message.channel.send('Input error');
+                }
+            }
+        }      
     }
 });
 

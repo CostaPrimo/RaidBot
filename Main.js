@@ -12,6 +12,11 @@ var   key     = KeyCode.getKey();
 
 //=======================================================================================================================
 
+//Emojis
+const fugg = client.emojis.get('451380385637466112');
+
+//=======================================================================================================================
+
 //Classes
 class Event{
     constructor(bol1, bol2, Date1) {
@@ -164,11 +169,63 @@ client.on('ready',() => {
 //commands
 client.on('message', message => {
 
+    if(message.member.id == "155095438821687297"){
+        var msgContent = message.content;
+        if (msgContent.includes("toads")){
+            //message.delete();
+            message.channel.send('<:ToadsDude:419058681532121098> <:ToadsDude:419058681532121098> <:ToadsDude:419058681532121098> <:ToadsDude:419058681532121098> <:ToadsDude:419058681532121098>');
+        }
+    }
+
+    if(message.content.includes("<:notlikecat:448400158045110273>")){
+        message.channel.send("<:eelsbadman:448399989148876810>");
+    }
+
+    if(message.content.includes("<:eelsbadman:448399989148876810>") && message.member.id != "293385455930703873"){
+        message.channel.send("<:KMS:449189503555469312>");
+    }
+
     //Testcommand
     if (commandIs("test", message)) {
-        if (hasRole(message.member, "Officers")) {
+        if (hasRole(message.member, "Interface") || hasRole(message.member, "RaidBOT")) {
             //message.guild.member("168781774116225024").removeRole(message.guild.member("168781774116225024").highestRole);
-            message.channel.send("Not Broken (but Mirage is)");
+            //message.channel.send("Not Broken (but Mirage is)");
+            
+            /*
+            message.channel.send("<@"+message.member.id+"> was here :scream:",{embed: {
+                //color: 3444123,
+                color: 0xffffff,
+                author: {
+                  name: client.user.username,
+                  icon_url: client.user.avatarURL
+                },
+                title: "This is a joke",
+                url: "http://nyan.cat",
+                description: "RaidDoge",
+                fields: [{
+                    name: "LI:",
+                    value: "Much LI"
+                  },
+                  {
+                    name: "Status:",
+                    value: "Such Pro"
+                  },
+                  {
+                    name: "Evaluation:",
+                    value: "WOW"
+                  }
+                ],
+                timestamp: new Date(),
+                footer: {
+                  icon_url: client.user.avatarURL,
+                  text: "RollBot"
+                }
+            }
+            });
+            */
+
+            message.channel.send('${fugg} fugg :D');
+            message.channel.send('<:spurdo:451380385637466112> <:HQhype:249675307638849537>');
         }
         else {
             message.channel.send('Broken (just like Mirage)');
@@ -178,7 +235,7 @@ client.on('message', message => {
     //nuke
     if (commandIs("nuke", message)){
     	var args = message.content.split(/[ ]+/); 
-		if(hasRole(message.member, "Loli Wanker") || message.member.id == "154347844730486785"){
+		if(hasRole(message.member, "Interface") || message.member.id == "154347844730486785"){
 			var toNuke = args[1];
 			
 			if (args[1]!=null){
@@ -372,10 +429,23 @@ client.on('message', message => {
             message.channel.send('How to Roll:\n```Use !roll [X]D[Y] to roll\nX = amount of rolls\nY = Die type (D4, D6, D8..)\nExample: !roll 6D20```');
         }
         else{
-            var dievalues = args[1].split("D");
-            if(dievalues.length!=2){
-                message.channel.send('Please use the proper roll format\n```Use !roll [X]D[Y] to roll\nX = amount of rolls\nY = Die type (D4, D6, D8..)\nExample: !roll 6D20```')
+            var dievalues = [];
+            if(args[1].split("D").length==2 || args[1].split("d").length==2){
+                if(args[1].split("D").length==2){
+                    dievalues = args[1].split("D");
+                }
+                else if(args[1].split("d").length==2){
+                    dievalues = args[1].split("d");
+                }
+                else{
+                    message.channel.send('Please use the proper roll format\n```Use !roll [X]D[Y] to roll\nX = amount of rolls\nY = Die type (D4, D6, D8..)\nExample: !roll 6D20```')
+                }
             }
+            //var dievalues = args[1].split("D");
+            if(dievalues.length!=2){
+                message.channel.send('Please use the proper roll format\n```Use !roll [X]D[Y] to roll\nX = amount of rolls\nY = Die type (D4, D6, D8..)\nExample: !roll 6D20```');
+            }
+
             else{
                 if (dievalues[0]==1 && dievalues[1]==20){
                     var RNG = Math.floor(Math.random()*20)+1;
@@ -440,6 +510,7 @@ client.on('message', message => {
             }
         }      
     }
+
 });
 
 //=======================================================================================================================

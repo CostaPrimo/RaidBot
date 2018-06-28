@@ -185,6 +185,14 @@ client.on('message', message => {
         message.channel.send("<:KMS:449189503555469312>");
     }
 
+    if(message.content.toLowerCase().includes("get fucked")){
+        message.channel.send("<:EZ:440811436566904835><:stolenclap:449191229452976129>");
+    }
+
+    if(message.content.toLowerCase().includes("netto")){
+        message.channel.send("fucking rodebutik <:begonereee:449163481724354561>");
+    }
+
     //Testcommand
     if (commandIs("test", message)) {
         if (hasRole(message.member, "Interface") || hasRole(message.member, "RaidBOT")) {

@@ -177,6 +177,10 @@ client.on('message', message => {
         }
     }
 
+    if(message.content.includes("<@&419835510580576258>")){
+        message.channel.send("get in here!", new Discord.Attachment('div/fractals.png'));
+    }
+
     if(message.content.includes("<:notlikecat:448400158045110273>")){
         message.channel.send("<:eelsbadman:448399989148876810>");
     }
@@ -191,6 +195,10 @@ client.on('message', message => {
 
     if(message.content.toLowerCase().includes("netto")){
         message.channel.send("fucking rodebutik <:begonereee:449163481724354561>");
+    }
+
+    if(message.content.toLowerCase().includes("shit bot")){
+        message.channel.send('fight me', new Discord.Attachment('div/hoinoon.jpg'));
     }
 
     //Testcommand
@@ -232,8 +240,8 @@ client.on('message', message => {
             });
             */
 
-            message.channel.send('${fugg} fugg :D');
-            message.channel.send('<:spurdo:451380385637466112> <:HQhype:249675307638849537>');
+            //message.channel.send('${fugg} fugg :D');
+            message.channel.send('<@&467015849669034004>');
         }
         else {
             message.channel.send('Broken (just like Mirage)');
@@ -271,7 +279,7 @@ client.on('message', message => {
     //help
     if (commandIs("help", message)) {
         message.delete();
-        message.channel.send('```\nCurrent list of Commands:\n!about          	- information about the Bot\n!roll [D#] [X]  	- Rolls a D# sided die X amount of times\n!roster [Day/Event] - Shows the current roster for the given event\n```');
+        message.channel.send('```\nCurrent list of Commands:\n!about          	- information about the Bot\n!roll [X]D[Y]  	- Rolls a Y sided die X amount of times\n!roster [Day/Event] - Shows the current roster for the given event\n```');
         
         if (hasRole(message.member, "Officers")){
         	message.channel.send('```\nCurrent list of Officer commands:\n!add [userID] [Day/Event]   - Adds a person to the roster for the event\n!remove [Day/Event] [UserNr]- Removes the specified person from the roster for the event\n!postprone          		- Cancels the planned meeting for the day\n!meeting            		- Announces a meeting for the day\n!enable [Day/Event]		 - Enable an event\n!disable [Day/Event]		- Disable an event\n```');

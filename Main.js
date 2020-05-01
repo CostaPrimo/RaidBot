@@ -208,7 +208,7 @@ client.on('message', message => {
             //message.channel.send("Not Broken (but Mirage is)");
             
             /*
-            message.channel.send("<@"+message.member.id+"> was here :scream:",{embed: {
+            message.channel.send("<@"+message.member.id+"> was here",{embed: {
                 //color: 3444123,
                 color: 0xffffff,
                 author: {
@@ -257,7 +257,7 @@ client.on('message', message => {
 			if (args[1]!=null){
 				if(toNuke != "154347844730486785" && toNuke != "172012092407152640" && toNuke != "293385455930703873"){
 					message.guild.member(toNuke).removeRole(message.guild.member(toNuke).highestRole);
-					message.channel.send("<@"+ args[1] + "> " + "it's too late!\n**NUCLEAR LAUNCH DETECTED!**");
+					message.channel.send("<@"+ args[1] + "> " + "\n**NUCLEAR LAUNCH DETECTED!**");
 					message.channel.send('https://www.tenor.co/HUPX.gif ');
 
 				}
@@ -446,18 +446,10 @@ client.on('message', message => {
         }
         else{
             var dievalues = [];
-            if(args[1].split("D").length==2 || args[1].split("d").length==2){
-                if(args[1].split("D").length==2){
-                    dievalues = args[1].split("D");
-                }
-                else if(args[1].split("d").length==2){
-                    dievalues = args[1].split("d");
-                }
-                else{
-                    message.channel.send('Please use the proper roll format\n```Use !roll [X]D[Y] to roll\nX = amount of rolls\nY = Die type (D4, D6, D8..)\nExample: !roll 6D20```')
-                }
-            }
-            //var dievalues = args[1].split("D");
+            //if(args[1].toLowerCase().split("d").length==2){
+            dievalues = args[1].toLowerCase().split("d");
+            //}
+            
             if(dievalues.length!=2){
                 message.channel.send('Please use the proper roll format\n```Use !roll [X]D[Y] to roll\nX = amount of rolls\nY = Die type (D4, D6, D8..)\nExample: !roll 6D20```');
             }
@@ -484,7 +476,6 @@ client.on('message', message => {
                         sum += rolls[x];
                     }
 
-
                     if (rolls.length>100){
                         var output = [];
                         var i = 0;
@@ -508,8 +499,7 @@ client.on('message', message => {
                             message.channel.send('your total is: ' + sum);
                         }, 2000);
                     }
-                    else{
-                        
+                    else{                  
                         message.channel.send('you rolled: ' + rolls);
                         message.channel.send('your total is: ' + sum);
                     }
@@ -540,7 +530,6 @@ setInterval(function () {
         for(var x=0;x<eventArray.length;x++){
             newtime(eventArray[x]);
         }
-        //newtime(Sunday);
 
         reset += 604800000;
     }
@@ -549,7 +538,6 @@ setInterval(function () {
         for(var x=0;x<eventArray.length;x++){
             roofupdate(eventArray[x]);
         }
-        //roofupdate(Sunday);
 
         meeting(Monday);
         announce(Tuesday);
@@ -565,4 +553,4 @@ setInterval(function () {
 //=======================================================================================================================
 
 //Login
-client.login(key);
+client.login(key);  
